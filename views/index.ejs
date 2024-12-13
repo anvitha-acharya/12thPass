@@ -14,9 +14,10 @@
             background-color: #000000;
             color: #ffff00;
         }
+        .bg{background-color: rgb(198, 225, 249);}
     </style>
 </head>
-<body>
+<body class="bg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" aria-label="12thPass Home">12thPass</a>
@@ -25,8 +26,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#features" aria-label="Go to Features section">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact" aria-label="Go to Contact section">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#signup" aria-label="Go to Signup">Signup</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#login" aria-label="Go to Login">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -34,11 +35,12 @@
 
     <div class="container my-5">
         <h1 class="text-center" aria-label="Welcome to 12thPass Portal">Welcome to 12thPass Portal</h1>
-        <p class="text-center">Simplifying the exam preparation journey for students with disabilities.</p>
+        <p class="text-center">Simplifying education accessibility for all.</p>
 
         <div class="text-center mb-4">
             <button id="tts-btn" class="btn btn-secondary" aria-label="Listen to this page">Listen</button>
-            <a href="/dashboard" class="btn btn-primary" aria-label="Get Started with 12thPass">Get Started</a>
+            <button id="tts-pause-resume" class="btn btn-warning" aria-label="Pause/Resume">Pause</button>
+            <a href="/dashboard" class="btn btn-primary" aria-label="Go to Dashboard">Get Started</a>
         </div>
 
         <div class="d-flex justify-content-between mb-3">
@@ -55,48 +57,135 @@
                 </select>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <form>
-            <div class="mb-3">
-                <label for="name" class="form-label">Enter Your Name</label>
-                <div class="input-group">
-                    <input type="text" id="name" class="form-control" placeholder="Your Name" aria-label="Enter your name">
-                    <button id="stt-btn" class="btn btn-secondary" type="button" aria-label="Start voice input">🎤</button>
+        <!-- Signup Form -->
+        <section id="signup">
+            <h2>Signup</h2>
+            <form action="/signup" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <div class="input-group">
+                    <input type="text" id="name" name="name" class="form-control" required aria-label="Enter your name">
+                    <button type="button" id="mic-name" class="btn btn-info">🎤</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age</label>
+                    <div class="input-group">
+                    <input type="number" id="age" name="age" class="form-control" required aria-label="Enter your age">
+                    <button type="button" id="mic-age" class="btn btn-info">🎤</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <div class="input-group">
+                    <select id="gender" name="gender" class="form-select" required aria-label="Select your gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <button type="button" id="mic-gender" class="btn btn-info">🎤</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-group">
+                    <input type="email" id="email" name="email" class="form-control" required aria-label="Enter your email">
+                    <button type="button" id="mic-email" class="btn btn-info">🎤</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="contact" class="form-label">Contact Number</label>
+                    <div class="input-group">
+                    <input type="tel" id="contact" name="contact" class="form-control" required aria-label="Enter your contact number">
+                    <button type="button" id="mic-contact" class="btn btn-info">🎤</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="documents" class="form-label">Upload Documents</label>
+                    <div class="input-group">
+                    <input type="file" id="documents" name="documents" class="form-control" required aria-label="Upload your documents">
+                
+                <button type="submit" class="btn btn-primary" aria-label="Submit your signup information">Submit</button>
+                </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Login Form -->
+        <section id="login" class="mt-5">
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+                <div class="mb-3">
+                    <label for="email-login" class="form-label">Email</label>
+                    <div class="input-group">
+                    <input type="email" id="email-login" name="email" class="form-control" required aria-label="Enter your email to login">
+                    <button type="button" id="mic-age" class="btn btn-info">🎤</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                    <input type="password" id="password" name="password" class="form-control" required aria-label="Enter your password">
+                    <button type="button" id="mic-age" class="btn btn-info">🎤</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" aria-label="Login to your account">Login</button>
+            </form>
+        </section>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/annyang@2.6.1/dist/annyang.min.js"></script>
     <script>
+        //Font-slider
+        const fontSizeSlider = document.getElementById('font-size');
+        fontSizeSlider.addEventListener('input', function () {
+            document.body.style.fontSize = `${fontSizeSlider.value}px`;
+        });
         // Text-to-Speech
         const ttsButton = document.getElementById('tts-btn');
+        const pauseResumeButton = document.getElementById('tts-pause-resume');
+        let speechSynthesisUtterance;
+        let isPaused = false;
+
         ttsButton.addEventListener('click', () => {
             const textToRead = document.body.innerText;
-            const speech = new SpeechSynthesisUtterance(textToRead);
-            speech.lang = 'en-US';
-            window.speechSynthesis.speak(speech);
+            speechSynthesisUtterance = new SpeechSynthesisUtterance(textToRead);
+            speechSynthesisUtterance.lang = 'en-US';
+            window.speechSynthesis.speak(speechSynthesisUtterance);
         });
 
-        // Speech-to-Text
-        const sttButton = document.getElementById('stt-btn');
-        const nameInput = document.getElementById('name');
-        sttButton.addEventListener('click', () => {
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.start();
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                nameInput.value = transcript;
-            };
-            recognition.onerror = (err) => alert('Speech recognition error: ' + err.error);
+        pauseResumeButton.addEventListener('click', () => {
+            if (isPaused) {
+                window.speechSynthesis.resume();
+                pauseResumeButton.textContent = "Pause";
+            } else {
+                window.speechSynthesis.pause();
+                pauseResumeButton.textContent = "Resume";
+            }
+            isPaused = !isPaused;
         });
 
-        // Font Size Adjustment
-        const fontSizeSlider = document.getElementById('font-size');
-        fontSizeSlider.addEventListener('input', () => {
-            document.body.style.fontSize = fontSizeSlider.value + 'px';
+        // Speech Recognition (Speech-to-Text)
+        const micButtons = document.querySelectorAll('button[id^="mic-"]');
+        micButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const fieldId = button.id.replace('mic-', '');
+                const inputField = document.getElementById(fieldId);
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                
+                recognition.start();
+                recognition.onresult = function(event) {
+                    const result = event.results[0][0].transcript;
+                    inputField.value = result;
+                    button.blur(); // Remove focus from the button
+                    navigator.vibrate(200); // Confirming sound via vibration
+                };
+                recognition.onerror = function() {
+                    alert("Speech recognition failed, please try again.");
+                };
+            });
         });
 
         // Color Contrast Adjustment
@@ -108,7 +197,5 @@
             if (mode === 'high-contrast') document.body.classList.add('high-contrast-mode');
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
