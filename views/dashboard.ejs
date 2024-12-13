@@ -5,22 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .high-contrast-mode {
+            background-color: #000000;
+            color: #ffff00;
+        }
+        .bg{background-color: rgb(198, 225, 249);}
+    </style>
 </head>
-<body>
+<body class="bg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">12thPass</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/exam-info">Exam Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mock-tests">Mock Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/application">Application Assistance</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
+
+    <!-- TTS Controls and Font Adjustability -->
+    <div class="container my-4">
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <label for="font-size" class="me-2">Adjust Font Size:</label>
+                <input type="range" id="font-size" min="14" max="24" value="16" aria-label="Adjust font size">
+            </div>
+            <div>
+                <button id="tts-btn" class="btn btn-secondary" aria-label="Listen to this page">Listen</button>
+                <button id="tts-pause-resume" class="btn btn-warning" aria-label="Pause/Resume">Pause</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container my-5">
         <h2>Dashboard</h2>
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Exam Info</h5>
-                        <p class="card-text">View details about various entrance exams.</p>
-                        <a href="/exam-info" class="btn btn-primary">Learn More</a>
+                        <h5 class="card-title">Learning Resources</h5>
+                        <p class="card-text">Get started with your learning path</p>
+                        <button id="learning-resources-btn" class="btn btn-primary">Start</button>
+                        <div id="learning-resources" class="mt-3"></div>
                     </div>
                 </div>
             </div>
@@ -44,6 +90,74 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Font Size Adjustment
+        const fontSizeSlider = document.getElementById('font-size');
+        fontSizeSlider.addEventListener('input', function () {
+            document.body.style.fontSize = `${fontSizeSlider.value}px`;
+        });
+
+        // Text-to-Speech (TTS)
+        const ttsButton = document.getElementById('tts-btn');
+        const pauseResumeButton = document.getElementById('tts-pause-resume');
+        let speechSynthesisUtterance;
+        let isPaused = false;
+
+        ttsButton.addEventListener('click', () => {
+            const textToRead = document.body.innerText;
+            speechSynthesisUtterance = new SpeechSynthesisUtterance(textToRead);
+            speechSynthesisUtterance.lang = 'en-US';
+            window.speechSynthesis.speak(speechSynthesisUtterance);
+        });
+
+        pauseResumeButton.addEventListener('click', () => {
+            if (isPaused) {
+                window.speechSynthesis.resume();
+                pauseResumeButton.textContent = "Pause";
+            } else {
+                window.speechSynthesis.pause();
+                pauseResumeButton.textContent = "Resume";
+            }
+            isPaused = !isPaused;
+        });
+
+        // Simulate fetching learning resources
+        const learningResourcesBtn = document.getElementById('learning-resources-btn');
+        const learningResourcesContainer = document.getElementById('learning-resources');
+
+        learningResourcesBtn.addEventListener('click', () => {
+            // Simulate fetching resources via an API call (or static array)
+            const resources = [
+                { title: 'Introduction to Physics', link: 'https://example.com/video1', description: 'A beginner guide to physics.' },
+                { title: 'Advanced Math Concepts', link: 'https://example.com/video2', description: 'Learn about advanced mathematical concepts.' },
+                { title: 'Chemistry 101', link: 'https://example.com/video3', description: 'A basic chemistry course.' }
+            ];
+
+            // Clear previous resources
+            learningResourcesContainer.innerHTML = '';
+
+            // Display fetched resources
+            resources.forEach(resource => {
+                const resourceElement = document.createElement('div');
+                resourceElement.classList.add('mb-3');
+                resourceElement.innerHTML = `
+                    <h5><a href="${resource.link}" target="_blank">${resource.title}</a></h5>
+                    <p>${resource.description}</p>
+                `;
+                learningResourcesContainer.appendChild(resourceElement);
+            });
+        });
+
+        // Theme Adjustment
+        const contrastMode = document.getElementById('contrast-mode');
+        contrastMode.addEventListener('change', () => {
+            const mode = contrastMode.value;
+            document.body.className = ''; // Reset classes
+            if (mode === 'dark') document.body.classList.add('dark-mode');
+            if (mode === 'high-contrast') document.body.classList.add('high-contrast-mode');
+        });
+    </script>
 </body>
 </html>
